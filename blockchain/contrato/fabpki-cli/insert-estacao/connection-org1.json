@@ -1,0 +1,140 @@
+
+    
+    {
+      "name": "sample-network",
+      "description": "Sample network contains 4 peers (2 orgs), 1 orderer and 2 cas for Python SDK testing",
+      "version": "1.0",
+      "client": {
+        "organization": "Org1",
+        "credentialStore": {
+          "path": "/tmp/hfc-kvs",
+          "cryptoStore": {
+            "path": "/tmp/hfc-cvs"
+          },
+          "wallet": "wallet-name"
+        }
+      },
+      "organizations": {
+        "orderer.example.com": {
+          "mspid": "OrdererMSP",
+          "orderers": [
+            "orderer.example.com"
+          ],
+          "certificateAuthorities": [
+            "ca-orderer"
+          ],
+          "users": {
+            "Admin": {
+              "cert": "../../../organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/signcerts/cert.pem",
+              "private_key": "../../../organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore/afa058cba969e892d9b197d030d20f78d74576042ae8ada8689ae67f5e75e19b_sk"
+            }
+          }
+        },
+        "org1.example.com": {
+          "mspid": "Org1MSP",
+          "peers": [
+            "peer0.org1.example.com"
+          ],
+          "certificateAuthorities": [
+            "ca-org1"
+          ],
+          "users": {
+            "Admin": {
+              "cert": "../../../organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem",
+              "private_key": "../../../organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/4958caae3b64b39b4763972637b8561a6adf683582707935391bb1ff36fd13c6_sk"
+            },
+            "User1": {
+              "cert": "../../../organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/cert.pem",
+              "private_key": "../../../organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/74652a926f2095ebe5fa4e25b31511d6699e34f6e6e6de390e70abf99dd2a7e2_sk"
+            }
+          }
+        },
+        "org2.example.com": {
+          "mspid": "Org2MSP",
+          "peers": [
+            "peer0.org2.example.com"
+          ],
+          "certificateAuthorities": [
+            "ca-org2"
+          ],
+          "users": {
+            "Admin": {
+              "cert": "../../../organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/cert.pem",
+              "private_key": "../../../organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/e68d0956784712895d0a3af50ebc819cc41b0ee0d9979f00fd1e9711e249cdc6_sk"
+            },
+            "User1": {
+              "cert": "../../../organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/signcerts/cert.pem",
+              "private_key": "../../../organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/keystore/7137fc8d070303004da0ecc950f3c870858edb8d555756e6ed0a4c78b5c37422_sk"
+            }
+          }
+        }
+      },
+      "orderers": {
+        "orderer.example.com": {
+          "url": "localhost:7050",
+          "grpcOptions": {
+            "grpc.ssl_target_name_override": "orderer.example.com",
+            "grpc-max-send-message-length": 15
+          },
+          "tlsCACerts": {
+            "path": "../../../organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
+          }
+        }
+      },
+      "peers": {
+        "peer0.org1.example.com": {
+          "url": "localhost:7051",
+          "eventUrl": "localhost:7053",
+          "grpcOptions": {
+            "grpc.ssl_target_name_override": "peer0.org1.example.com",
+            "grpc.http2.keepalive_time": 15
+          },
+          "tlsCACerts": {
+            "path": "../../../organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem" }
+        },
+      
+        "peer0.org2.example.com": {
+          "url": "localhost:9051",
+          "eventUrl": "localhost:9053",
+          "grpcOptions": {
+            "grpc.ssl_target_name_override": "peer0.org2.example.com",
+            "grpc.http2.keepalive_time": 15
+          },
+          "tlsCACerts": {
+            "path": "../../../organizations/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
+          }
+        }
+      },
+      "certificateAuthorities": {
+        "ca-org1": {
+          "url": "https://localhost:7054",
+          "grpcOptions": {
+            "verify": true
+          },
+          "tlsCACerts": {
+            "path": "../../../organizations/fabric-ca/org1/ca-cert.pem"
+          },
+          "registrar": [
+            {
+              "enrollId": "admin",
+              "enrollSecret": "adminpw"
+            }
+          ]
+        },
+        "ca-org2": {
+          "url": "https://localhost:8054",
+          "grpcOptions": {
+            "verify": true
+          },
+          "tlsCACerts": {
+            "path": "../../../organizations/fabric-ca/org2/ca-cert.pem"
+          },
+          "registrar": [
+            {
+              "enrollId": "admin",
+              "enrollSecret": "adminpw"
+            }
+          ]
+        }
+      }
+    }
