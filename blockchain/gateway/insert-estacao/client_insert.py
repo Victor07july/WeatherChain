@@ -96,7 +96,8 @@ if __name__ == "__main__":
         #creates a loop object to manage async transactions
         
         new_gateway = Gateway() # Creates a new gateway instance
-      
+
+        
         c_hlf = client_fabric(net_profile=(domain[0] + ".json"))
         user = c_hlf.get_user('org1.example.com', 'User1')
         admin = c_hlf.get_user('org1.example.com', 'Admin')
