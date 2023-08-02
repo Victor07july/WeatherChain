@@ -24,7 +24,7 @@
       "users": {
         "Admin": {
           "cert": "../../organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/signcerts/cert.pem",
-          "private_key": "../../../../WeatherChain/blockchain/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore/8633d42a42e8cb7bdef28ffa0ae05979e2258b8d9e5689dd086a7d9fe723e99c_sk"
+          "private_key": "../../../../WeatherChain/blockchain/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore/b2a0164eb8b3eb7150bbed5d264cd9c80b01e241c59652324b68ddcfea3f7610_sk"
         }
       }
     },
@@ -39,11 +39,11 @@
       "users": {
         "Admin": {
           "cert": "../../organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem",
-          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/0c0ba3e80ca2019ff0e4dd85fa4e36c4b8e8e21382264e9d0c52f1f196171474_sk"
+          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/8231759cb233fb23c270f5d2c8f30f0c70b4380e9797e39132d4eeed27ad2d16_sk"
         },
         "User1": {
           "cert": "../../organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/cert.pem",
-          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/605c1899f0924c2c552f057d329f44a70c817a8b96d119adb8fc5ac2b458fcb5_sk"
+          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/1d230160a82df3dae9d280fa9911eeae29ab506ceaaf170fe9494efda855445d_sk"
         }
       }
     },
@@ -58,11 +58,11 @@
       "users": {
         "Admin": {
           "cert": "../../organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/cert.pem",
-          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/605c1899f0924c2c552f057d329f44a70c817a8b96d119adb8fc5ac2b458fcb5_sk"
+          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/1d230160a82df3dae9d280fa9911eeae29ab506ceaaf170fe9494efda855445d_sk"
         },
         "User1": {
           "cert": "../../organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/signcerts/cert.pem",
-          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/605c1899f0924c2c552f057d329f44a70c817a8b96d119adb8fc5ac2b458fcb5_sk"
+          "private_key": "../../../../WeatherChain/blockchain/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/1d230160a82df3dae9d280fa9911eeae29ab506ceaaf170fe9494efda855445d_sk"
         }
       }
     }

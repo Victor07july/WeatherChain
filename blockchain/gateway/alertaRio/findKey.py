@@ -147,3 +147,5 @@ else:
 data['organizations']['org2.example.com']['users']['User1']['private_key'] = filePath
 with open(jsonPath, 'w') as file:
     json.dump(data, file, indent=2)
+
+print('Caminhos atualizdos com sucesso!')

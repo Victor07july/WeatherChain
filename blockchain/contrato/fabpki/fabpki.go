@@ -137,6 +137,8 @@ func (s *SmartContract) Invoke(stub shim.ChaincodeStubInterface) sc.Response {
 		return s.insertStationData(stub, args)
 	} else if fn == "getStationData" {
 		return s.getStationData(stub, args)
+	} else if fn == "queryStationByTimestamp" {
+		return s.queryStationByTimestamp(stub, args)
 	}
 
 	//function fn not implemented, notify error
@@ -475,16 +477,16 @@ func (s *SmartContract) getStationData(stub shim.ChaincodeStubInterface, args []
 	// log
 	fmt.Println("Retrieving station data after unmarshall: ", MinhaEstacao)
 
-	horaLeitura 	  := string(MinhaEstacao.HoraLeitura)
-	totalUltimaHora   := string(MinhaEstacao.TotalUltimaHora)
-	situacao 		  := string(MinhaEstacao.Situacao)
+	horaLeitura := string(MinhaEstacao.HoraLeitura)
+	totalUltimaHora := string(MinhaEstacao.TotalUltimaHora)
+	situacao := string(MinhaEstacao.Situacao)
 	direcaoVentoGraus := string(MinhaEstacao.DirecaoVentoGraus)
-	velocidadeVento   := string(MinhaEstacao.VelocidadeVento)
-	temperatura 	  := string(MinhaEstacao.Temperatura)
-	pressao 		  := string(MinhaEstacao.Pressao)
-	umidade 		  := string(MinhaEstacao.Umidade)
-	timestampEstacao  := string(MinhaEstacao.TimestampEstacao)
-	timestampCliente  := string(MinhaEstacao.TimestampCliente)
+	velocidadeVento := string(MinhaEstacao.VelocidadeVento)
+	temperatura := string(MinhaEstacao.Temperatura)
+	pressao := string(MinhaEstacao.Pressao)
+	umidade := string(MinhaEstacao.Umidade)
+	timestampEstacao := string(MinhaEstacao.TimestampEstacao)
+	timestampCliente := string(MinhaEstacao.TimestampCliente)
 
 	var info = "\nInformações (tabelas) disponiveis: " + situacao +
 		"\nHorario de leitura : " + horaLeitura +
@@ -502,6 +504,81 @@ func (s *SmartContract) getStationData(stub shim.ChaincodeStubInterface, args []
 		[]byte(info),
 	)
 
+}
+
+func (s *SmartContract) queryStationByTimestamp(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 2 {
+		return shim.Error("It was expected 2 parameters: <station id> <unix timestamp>")
+	}
+
+	historyIer, err := stub.GetHistoryForKey(args[0])
+	wantedUnixTime := args[1]
+
+	//verifies if the history exists
+	if err != nil {
+		//fmt.Println(errMsg)
+		return shim.Error("Fail on getting ledger history")
+	}
+
+	// flag de achou ou nao
+	flag := 0
+	errMsg := ""
+
+	for historyIer.HasNext() {
+		queryResponse, err := historyIer.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+
+		valorBytes := queryResponse.Value
+
+		MinhaEstacao := DadosEstacao{}
+
+		json.Unmarshal(valorBytes, &MinhaEstacao)
+		fmt.Println("Retrieving station data after unmarshall: ", MinhaEstacao)
+
+		stationUnixTime := string(MinhaEstacao.TimestampEstacao)
+
+		if wantedUnixTime == stationUnixTime {
+			horaLeitura := string(MinhaEstacao.HoraLeitura)
+			totalUltimaHora := string(MinhaEstacao.TotalUltimaHora)
+			situacao := string(MinhaEstacao.Situacao)
+			direcaoVentoGraus := string(MinhaEstacao.DirecaoVentoGraus)
+			velocidadeVento := string(MinhaEstacao.VelocidadeVento)
+			temperatura := string(MinhaEstacao.Temperatura)
+			pressao := string(MinhaEstacao.Pressao)
+			umidade := string(MinhaEstacao.Umidade)
+			timestampEstacao := string(MinhaEstacao.TimestampEstacao)
+			timestampCliente := string(MinhaEstacao.TimestampCliente)
+
+			var info = "\nInformações (tabelas) disponiveis: " + situacao +
+				"\nHorario de leitura : " + horaLeitura +
+				"\nPrecipitação na última hora: " + totalUltimaHora +
+				"\nDireção do vento (graus): " + direcaoVentoGraus +
+				"\nVelocidade do vento: " + velocidadeVento +
+				"\nTemperatura: " + temperatura +
+				"\nPressão: " + pressao +
+				"\nUmidade: " + umidade +
+				"\nTimestamp da Estação (UNIX): " + timestampEstacao +
+				"\nTimestamp do Cliente (UNIX): " + timestampCliente
+
+			flag++
+			return shim.Success([]byte(info))
+		}
+
+	}
+	historyIer.Close()
+
+	//loging...
+	// fmt.Printf("Consulting ledger history, found %d\n records", counter)
+
+	if flag == 0 {
+		// const shimErr = shim.Error("Não encontrado")
+		errMsg = "Não encontrado"
+	}
+
+	return shim.Error(errMsg)
 }
 
 /*

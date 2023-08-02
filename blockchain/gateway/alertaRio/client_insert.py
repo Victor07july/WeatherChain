@@ -121,20 +121,6 @@ if __name__ == "__main__":
                #cc_pattern="^invoked*"  # if you want to wait for chaincode event and you have a `stub.SetEvent("invoked", value)` in your chaincode
                ))
         print(response)
-
-        response = loop.run_until_complete(c_hlf.chaincode_invoke(
-               requestor=admin,
-               channel_name=channel_name,
-               peers=['peer0.org1.example.com', 'peer0.org2.example.com'],
-               args=[idEstacao],
-               fcn= 'getStationData',
-               cc_name=cc_name,
-               transient_map=None, # optional, for private data
-               wait_for_event=True, # for being sure chaincode invocation has been commited in the ledger, default is on tx event
-               #cc_pattern='^invoked*' # if you want to wait for chaincode event and you have a `stub.SetEvent("invoked", value)` in your chaincode
-               ))
-        print(response)
-
     
     else:
         print("Falha! Ambas as arrays estão vazias! Você escolheu um ID válido?")
