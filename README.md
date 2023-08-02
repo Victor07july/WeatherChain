@@ -31,13 +31,43 @@ Entre na pasta do cliente
 cd gateway/alertaRio
 ```
 
-Agora, para iniciar o cliente que realiza o web scrape será necessário inserir um ID de estação disponível no [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/).
-
+E execute o seguinte comando para atualizar o arquivo json (necessário apenas 1 vez a cada inicialização da rede blockchain)
 
 ```
-python3 
+python3 findKey.py
 ```
 
+Agora, para iniciar o cliente que realiza o web scrape será necessário inserir um ID de estação disponível no [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/). Caso você insira um ID não disponível, o cliente irá retornar uma mensagem de erro e listar os IDs disponíveis para cada tabela no site.
+
+Para executar o cliente, insira o comando:
+
+```
+python3 client_insert.py <ID da Estação>
+
+Exemplo:
+
+python3 client_insert.py 16
+```
+
+E pronto! O cliente irá buscar os dados e os inserir no ledger. Para retornar os últimos dados inseridos, use o comando
+
+```
+python3 client_get.py <ID da Estação>
+
+Exemplo:
+
+python3 client_get.py 16
+```
+
+Os dados são inseridos com um timestamp em Unix com base na última atualização realizada no [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/), e é possível retornar os dados inseridos no ledger de uma estação um horário específico. Para fazer isso, execute o seguinte comando:
+
+```
+python3 client_query.py <Horário em unix>
+
+Exemplo:
+
+python3 client_query.py 1690991400
+```
 
 
 Para fazer a rede parar utilize os comandos abaixo:
