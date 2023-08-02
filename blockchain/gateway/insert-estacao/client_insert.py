@@ -14,7 +14,7 @@ domain = ["connection-org1"]
 channel_name = "mychannel"
 cc_name = "fabpki"
 cc_version = "1.0"
-callpeer = ['peer0.org1.example.com']
+callpeer = ['peer0.org1.example.com', 'peer0.org2.example.com']
 
 URL = "http://alertario.rio.rj.gov.br/upload/TempoReal.html"
 
