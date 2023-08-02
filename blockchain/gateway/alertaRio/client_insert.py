@@ -106,8 +106,6 @@ if __name__ == "__main__":
         peer = c_hlf.get_peer('peer0.org1.example.com')
         peers.append(peer)
         options = {'wallet': ''}
-
-
     
         c_hlf.new_channel(channel_name)
         

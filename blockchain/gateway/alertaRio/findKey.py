@@ -21,16 +21,16 @@ jsonPath = ''
 
 print("Verificando chaves...")
 try:
-    with open('../WeatherChain/blockchain/gateway/insert-estacao/connection-org1.json', 'r') as file:
+    with open('../WeatherChain/blockchain/gateway/alertaRio/connection-org1.json', 'r') as file:
         data = json.load(file)
-        jsonPath = '../WeatherChain/blockchain/gateway/insert-estacao/connection-org1.json'
+        jsonPath = '../WeatherChain/blockchain/gateway/alertaRio/connection-org1.json'
 except FileNotFoundError:
     print('Caminho não encontrado. Tentando um caminho alternativo...')
     
     try:
-        with open('../../../../WeatherChain/blockchain/gateway/insert-estacao/connection-org1.json', 'r') as file:
+        with open('../../../../WeatherChain/blockchain/gateway/alertaRio/connection-org1.json', 'r') as file:
             data = json.load(file)
-        jsonPath = '../../../../WeatherChain/blockchain/gateway/insert-estacao/connection-org1.json'
+        jsonPath = '../../../../WeatherChain/blockchain/gateway/alertaRio/connection-org1.json'
     except FileNotFoundError:
         print('Arquivo não encontrado no caminho alternativo.')
 
