@@ -89,6 +89,15 @@ type DadosEstacao struct {
 	TimestampCliente  string `json:"timestampcliente"`
 }
 
+type HCAirTemperature struct {
+	Name           string `json:"name"`
+	Unit           string `json:"unit"`
+	AvgTemp        string `json:"avgtemp"`
+	MaxTemp        string `json:"maxtemp"`
+	MinTemp        string `json:"mintemp"`
+	UpdateTimeUnix string `json:"updatetimeunix"`
+}
+
 // PublicKeyDecodePEM method decodes a PEM format public key. So the smart contract can lead
 // with it, store in the blockchain, or even verify a signature.
 // - pemEncodedPub - A PEM-format public key
@@ -139,6 +148,10 @@ func (s *SmartContract) Invoke(stub shim.ChaincodeStubInterface) sc.Response {
 		return s.getStationData(stub, args)
 	} else if fn == "queryStationByTimestamp" {
 		return s.queryStationByTimestamp(stub, args)
+	} else if fn == "InsertHCData" {
+		return s.InsertHCData(stub, args)
+	} else if fn == "ReadHCData" {
+		return s.ReadHCData(stub, args)
 	}
 
 	//function fn not implemented, notify error
@@ -579,6 +592,104 @@ func (s *SmartContract) queryStationByTimestamp(stub shim.ChaincodeStubInterface
 	}
 
 	return shim.Error(errMsg)
+}
+
+func (s *SmartContract) InsertHCData(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	// exists, err := s.AssetExists(ctx, id)
+
+	if len(args) != 8 {
+		return shim.Error("Os parâmetros esperados são: ...")
+	}
+
+	id := args[0]
+	name := args[1]
+	unit := args[2]
+	avgtemp := args[3]
+	maxtemp := args[4]
+	mintemp := args[5]
+	updatetimeunix := args[6]
+
+	hcairtemperature := HCAirTemperature{
+		Name:           name,
+		Unit:           unit,
+		AvgTemp:        avgtemp,
+		MaxTemp:        maxtemp,
+		MinTemp:        mintemp,
+		UpdateTimeUnix: updatetimeunix,
+	}
+
+	hcairtemperatureJSON, err := json.Marshal(hcairtemperature)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	//registra dados no ledger com o id da estação sendo a chave
+	stub.PutState(id, hcairtemperatureJSON)
+
+	var info = "Dados da estação registrados com sucesso!"
+
+	// returns all info
+	return shim.Success(
+		[]byte(info),
+	)
+}
+
+// ReadAsset returns the asset stored in the world state with given id.
+func (s *SmartContract) ReadHCData(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	//validate args vector lenght
+	if len(args) != 1 {
+		return shim.Error("It was expected the parameters: <\"ID\">")
+	}
+
+	//gets the parameters
+	id := args[0]
+	fmt.Println(id)
+
+	// retrieve the data from the ledger
+	hcairtemperatureJSON, err := stub.GetState(id)
+	if err != nil {
+		fmt.Println(err)
+		return shim.Error("Error retrieving station from the ledger")
+	}
+
+	// check if its null
+	if hcairtemperatureJSON == nil {
+		return shim.Error("Nenhum dado encontrado")
+	}
+
+	//creates struct to manipulate returned bytes
+	MyHC := HCAirTemperature{}
+
+	//loging...
+	fmt.Println("Retrieving data: ", hcairtemperatureJSON)
+
+	//convert bytes into a object
+	json.Unmarshal(hcairtemperatureJSON, &MyHC)
+
+	// log
+	fmt.Println("Retrieving data after unmarshall: ", MyHC)
+
+	// getting varibles
+	name := string(MyHC.Name)
+	unit := string(MyHC.Unit)
+	avgtemp := string(MyHC.AvgTemp)
+	maxtemp := string(MyHC.MaxTemp)
+	mintemp := string(MyHC.MinTemp)
+	updatetime := string(MyHC.UpdateTimeUnix)
+
+	var info = "Nome: " + name +
+		"\n Código (unit): " + unit +
+		"\n Temperatura média: " + avgtemp +
+		"\n Temperatura máxima: " + maxtemp +
+		"\n Temperatura mínima: " + mintemp +
+		"\n Horário (unix): " + updatetime
+
+	// returns all station info
+	return shim.Success(
+		[]byte(info),
+	)
 }
 
 /*

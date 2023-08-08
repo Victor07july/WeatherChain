@@ -1,6 +1,11 @@
 O Hyperledger Fabric é uma plataforma para soluções de contabilidade distribuída sustentadas por uma arquitetura modular que oferece altos graus de confidencialidade, resiliência, flexibilidade e escalabilidade. Ele foi projetado para oferecer suporte a implementações conectáveis ​​de diferentes componentes e acomodar a complexidade e os meandros existentes em todo o ecossistema econômico.
 
-Este projeto se trata de um sistema que realiza um web scrape, recebendo os dados das estações em tempo real do website [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/), e os inserindo no blockchain
+Este projeto blockchain possui dois clientes:
+
+- Um cliente realiza um web scrape, recebendo os dados das estações em tempo real do website [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/), e os inserindo no blockchain
+
+- Outro cliente recebe dados da API do FieldClimate os insere no blockchain
+
 
 
 Caso a plataforma não esteja instalada na maquina, existem alguns requisitos minimos necessarios para utilizar a rede, que podem ser encontrados no seguinte repósitório
@@ -25,10 +30,10 @@ Implemente o chaincode com o comando:
 ```
 ./network.sh deployCC -ccn fabpki -ccp contrato/fabpki -ccl go
 ```
-Entre na pasta do cliente
+Entre na pasta gateway
 
 ```
-cd gateway/alertaRio
+cd gateway
 ```
 
 E execute o seguinte comando para atualizar o arquivo json (necessário apenas 1 vez a cada inicialização da rede blockchain)
@@ -37,7 +42,7 @@ E execute o seguinte comando para atualizar o arquivo json (necessário apenas 1
 python3 findKey.py
 ```
 
-Agora, para iniciar o cliente que realiza o web scrape será necessário inserir um ID de estação disponível no [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/). Caso você insira um ID não disponível, o cliente irá retornar uma mensagem de erro e listar os IDs disponíveis para cada tabela no site.
+Começando com o cliente do Alerta Rio, para inicia-lo é necessário inserir um ID de estação disponível no [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/). Caso você insira um ID não disponível, o cliente irá retornar uma mensagem de erro e listar os IDs disponíveis para cada tabela no site.
 
 Para executar o cliente, insira o comando:
 
@@ -67,6 +72,19 @@ python3 client_query.py <Horário em unix>
 Exemplo:
 
 python3 client_query.py 1690991400
+```
+
+Agora, para executar o cliente do FieldClimate, retorne para a pasta gateway e entre na pasta fieldclimate
+
+```
+cd ..
+cd fieldclimate
+```
+
+E insira o seguinte comando
+
+```
+python3 client.py
 ```
 
 

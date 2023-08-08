@@ -32,7 +32,7 @@ if __name__ == "__main__":
         
     new_gateway = Gateway() # Creates a new gateway instance
 
-    c_hlf = client_fabric(net_profile=(domain[0] + ".json"))
+    c_hlf = client_fabric('/home/stephanie/WeatherChain/blockchain/gateway/connection-org1.json')
     user = c_hlf.get_user('org1.example.com', 'User1')
     admin = c_hlf.get_user('org1.example.com', 'Admin')
     # print(admin)
