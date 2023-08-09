@@ -680,7 +680,8 @@ func (s *SmartContract) ReadHCData(stub shim.ChaincodeStubInterface, args []stri
 	updatetime := string(MyHC.UpdateTimeUnix)
 
 	var info = "Nome: " + name +
-		"\n Código (unit): " + unit +
+		"\n ID do dispositivo: " + id +
+		"\n Unidade de medida: " + unit +
 		"\n Temperatura média: " + avgtemp +
 		"\n Temperatura máxima: " + maxtemp +
 		"\n Temperatura mínima: " + mintemp +

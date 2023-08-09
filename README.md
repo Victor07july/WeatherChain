@@ -42,7 +42,13 @@ E execute o seguinte comando para atualizar o arquivo json (necessário apenas 1
 python3 findKey.py
 ```
 
-Começando com o cliente do Alerta Rio, para inicia-lo é necessário inserir um ID de estação disponível no [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/). Caso você insira um ID não disponível, o cliente irá retornar uma mensagem de erro e listar os IDs disponíveis para cada tabela no site.
+Chegamos na etapa de execução dos clientes. Começando pelo Alerta Rio, acesse sua pasta com o comando
+
+```
+cd alertaRio
+```
+
+Agora, para inicia-lo é necessário inserir um ID de estação disponível no [Alerta Rio](http://alertario.rio.rj.gov.br/tabela-de-dados/). Caso você insira um ID não disponível, o cliente irá retornar uma mensagem de erro e listar os IDs disponíveis para cada tabela no site.
 
 Para executar o cliente, insira o comando:
 
@@ -83,7 +89,7 @@ cd fieldclimate
 
 E insira o seguinte comando
 
-```
+```     
 python3 client.py
 ```
 
